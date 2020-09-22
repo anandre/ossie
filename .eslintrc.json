@@ -1,0 +1,25 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+  },
+  "extends": [
+      "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+      "linebreak-style": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "prefer-template": "warn",
+      "camelcase": "warn",
+      "semi": "warn",
+      "eqeqeq": "warn",
+      "require-await": "warn",
+      "no-inline-comments": "warn",
+      "@typescript-eslint/no-non-null-assertion": "off"
+  },
+  "overrides": [{
+      "files": ["*.js", "*.ts"]
+  }]
+}
