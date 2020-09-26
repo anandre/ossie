@@ -17,32 +17,37 @@ export abstract class Equipment {
   focus: number;
   tough: number;
   mind: number;
+  dodge: number;
+  resist: number;
 
   statuses: string[];
   id: string;
 
-  wielder: Path | null;
+  wielder?: Path
 
-  constructor(wielder: Path | null, stats: EquipStats) {
-    this.wielder = wielder;
+  constructor(stats: FullOpts) {
 
     this.name = stats.name;
     this.id = stats.id;
 
-    this.str = stats.str ? stats.str : 0;
-    this.agi = stats.agi ? stats.agi : 0;
-    this.con = stats.con ? stats.con : 0;
-    this.mag = stats.mag ? stats.mag : 0;
-    this.spr = stats.spr ? stats.spr : 0;
+    this.str = stats.str ?? 0;
+    this.agi = stats.agi ?? 0;
+    this.con = stats.con ?? 0;
+    this.mag = stats.mag ?? 0;
+    this.spr = stats.spr ?? 0;
 
-    this.hp = stats.hp ? stats.hp : 0;
-    this.mp = stats.mp ? stats.mp : 0;
-    this.acc = stats.acc ? stats.acc : 0;
-    this.focus = stats.focus ? stats.focus : 0;
-    this.tough = stats.tough ? stats.tough : 0;
-    this.mind = stats.mind ? stats.mind : 0;
+    this.hp = stats.hp ?? 0;
+    this.mp = stats.mp ?? 0;
+    this.acc = stats.acc ?? 0;
+    this.focus = stats.focus ?? 0;
+    this.tough = stats.tough ?? 0;
+    this.mind = stats.mind ?? 0;
+    this.dodge = stats.dodge ?? 0;
+    this.resist = stats.resist ?? 0;
 
     this.statuses = stats.statuses ?? [];
+
+    this.wielder = stats.wielder ?? undefined;
   }
 
   public async setStatuses(): Promise<void> {
@@ -58,34 +63,37 @@ export abstract class Equipment {
 export abstract class Weapon extends Equipment {
   damage: number;
   
-  constructor(wielder: Path | null, stats: EquipStats) {
-    super(wielder, stats);
+  constructor(stats: FullOpts) {
+    super(stats);
 
-    this.damage = stats.damage ? stats.damage : 3;
+    this.damage = stats.damage ?? 3;
   }
 
   public slot = 'weapon';
 
-  public calculateDamage(stat: '_str' | '_agi' | '_mag'): number {
+  public calculateDamage(stat: 'str' | 'agi' | 'mag'): number {
     return this.damage + Math.round(this.wielder!.level / 2) + Math.round(this.wielder![stat] / 3);
   }
 }
 
 export abstract class Armor extends Equipment {
-  constructor(wielder: Path | null = null, stats: EquipStats) {
-    super(wielder, stats);
+  constructor(stats: FullOpts) {
+    super(stats);
   }
 
   public slot = 'armor';
 }
 
 export abstract class Accessory extends Equipment {
-  constructor(wielder: Path | null = null, stats: EquipStats) {
-    super(wielder, stats);
+  constructor(stats: FullOpts) {
+    super(stats);
   }
 
   public slot = 'accessory';
 }
+
+type PathOpts = { wielder?: Path };
+export type FullOpts = EquipStats & PathOpts;
 
 export interface EquipStats {
   name: string;
@@ -103,6 +111,8 @@ export interface EquipStats {
   focus?: number;
   tough?: number;
   mind?: number;
+  dodge?: number;
+  resist?: number;
 
   damage?: number;
 

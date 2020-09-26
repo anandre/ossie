@@ -1,10 +1,12 @@
-import { Armor } from '../../common/equipment';
+import { Armor, FullOpts } from '../../common/equipment';
+
+export const stats: FullOpts = {
+  name: 'leather tunic',
+  id: 'leathertunic'
+};
 
 export default class LeatherTunic extends Armor {
   constructor() {
-    super(null, {
-      name: 'leather tunic',
-      id: 'leathertunic'
-    });
+    super(stats);
   }
 }

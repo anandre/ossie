@@ -20,7 +20,7 @@ readdir(join(appDir, '/data/paths/'), async (err, files) => {
     const _imported = await import(join(appDir, `/data/paths/${file}`));
     const imported = 'default' in _imported ? _imported.default : _imported;
     const path: Path = new imported();
-    DataManager.paths.set(path.path, path);
+    DataManager.paths.set(path.path!, path);
   }
 });
 
@@ -28,8 +28,7 @@ readdir(join(appDir, '/data/items/weapons/'), async (err, files) => {
   if (err) console.error(err);
   for (const file of files) {
     const _imported = await import(join(appDir, `/data/items/weapons/${file}`));
-    const imported = 'default' in _imported ? _imported.default : _imported;
-    const weapon: Weapon = new imported();
+    const weapon: Weapon = new _imported.default({ ..._imported.stats});
     DataManager.weapons.set(weapon.id, weapon);
   }
 });
@@ -38,8 +37,7 @@ readdir(join(appDir, '/data/items/armor'), async (err, files) => {
   if (err) console.error(err);
   for (const file of files) {
     const _imported = await import(join(appDir, `/data/items/armor/${file}`));
-    const imported = 'default' in _imported ? _imported.default : _imported;
-    const armor: Armor = new imported();
+    const armor: Armor = new _imported.default({ ..._imported.stats});
     DataManager.armors.set(armor.id, armor);
   }
 });
@@ -48,8 +46,7 @@ readdir(join(appDir, '/data/items/accessories'), async (err, files) => {
   if (err) console.error(err);
   for (const file of files) {
     const _imported = await import(join(appDir, `/data/items/accessories/${file}`));
-    const imported = 'default' in _imported ? _imported.default : _imported;
-    const accessory: Accessory = new imported();
+    const accessory: Accessory = new _imported.default({ ..._imported.stats});
     DataManager.armors.set(accessory.id, accessory);
   }
 });

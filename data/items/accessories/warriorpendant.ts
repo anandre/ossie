@@ -1,10 +1,12 @@
-import { Accessory } from '../../common/equipment';
+import { Accessory, FullOpts } from '../../common/equipment';
+
+export const stats: FullOpts = {
+  name: 'warrior\'s pendant',
+  id: 'warriorpendant'
+};
 
 export default class WarriorPendant extends Accessory {
   constructor() {
-    super(null, {
-      name: 'warrior\'s pendant',
-      id: 'warriorpendant'
-    });
+    super(stats);
   }
 }
